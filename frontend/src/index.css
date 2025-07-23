@@ -4,8 +4,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-    background-color: #fbf17e;
-    /* background-image: url('D:\web dev\MoodMate\frontend\public\doodle-edited.jpg'); */
+    /*background-color: #fbf17e;*/
+    background-image: url('/yellowpattern.jpg');
     color: #333;
 }
 
