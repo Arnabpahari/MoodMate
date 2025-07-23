@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
 import LoginForm from '../components/Auth/LoginForm';
 import SignupForm from '../components/Auth/SignupForm';
+import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(true);
+    const navigate = useNavigate();
+
+    // Called when login is successful
+    const handleLoginSuccess = () => {
+        // Token already saved in LoginForm
+        navigate('/home');
+    };
 
     return (
         <div style={styles.container}>
             <h1 style={styles.heading}>MoodMate</h1>
-            {isLogin ? <LoginForm /> : <SignupForm />}
+            {isLogin ? (
+                <LoginForm onLoginSuccess={handleLoginSuccess} />
+            ) : (
+                <SignupForm />
+            )}
             <p style={styles.toggleText}>
                 {isLogin ? "Don't have an account?" : "Already have an account?"}
                 <button onClick={() => setIsLogin(!isLogin)} style={styles.toggleButton}>
@@ -41,10 +53,12 @@ const styles = {
         color: '#007bff',
         border: 'none',
         fontSize: '16px',
-        marginLeft: '8px'
+        marginLeft: '8px',
+        cursor: 'pointer'
     }
 };
 
 export default AuthPage;
+
 
 
