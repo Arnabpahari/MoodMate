@@ -3,79 +3,37 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
-    const [formData, setFormData] = useState({ username: '', password: '' });
-    const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({ username: '', password: '' });
 
-    const handleChange = e => {
+    const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Trying login with:", formData);  // 🔍
-
         try {
-            const res = await axios.post(
-                'https://moodmate-backend-bzmq.onrender.com/api/auth/login',
-                formData
-            );
-
-            console.log("Login success:", res.data);  // 🔍
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('username', res.data.username);
-            navigate('/home');
+            const res = await axios.post('http://localhost:5000/api/auth/login', formData);
+            const token = res.data.token;
+            console.log("Login success. Token:", token);
+            localStorage.setItem('token', token);
+            navigate('/home'); // ✅ navigate after setting token
         } catch (err) {
-            console.error("Login failed:", err.response?.data || err.message);  // 🔍
-            setError(err.response?.data?.message || 'Login error');
+            console.error("Login failed:", err.response?.data?.message || err.message);
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <input
-                name="username"
-                placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
-                style={inputStyle}
-                required
-            />
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                style={inputStyle}
-                required
-            />
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <button type="submit" style={buttonStyle}>Login</button>
+            <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
+            <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
+            <button type="submit">Login</button>
         </form>
     );
 };
 
-const inputStyle = {
-    width: '100%',
-    padding: '12px',
-    margin: '10px 0',
-    borderRadius: '8px',
-    border: '1px solid #ccc',
-    fontSize: '14px'
-};
-
-const buttonStyle = {
-    width: '100%',
-    padding: '12px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '16px'
-};
-
 export default LoginForm;
+
 
 
 
