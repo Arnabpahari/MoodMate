@@ -22,6 +22,7 @@ const LoginForm = () => {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('username', res.data.username);
 
+            console.log("Login success. Token:", res.data.token);
             navigate('/home');  // ✅ Use React Router navigation
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
