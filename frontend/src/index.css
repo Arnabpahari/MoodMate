@@ -5,7 +5,7 @@ body {
     padding: 0;
     font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
     /*background-color: #fbf17e;*/
-    background-image: url('yellowpattern.jpg');
+    background-image: url('/public/yellowpattern.jpg');
     color: #333;
 }
 
