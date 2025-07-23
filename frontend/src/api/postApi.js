@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'https://moodmate-api.onrender.com/api',
+    baseURL: 'https://moodmate-api.onrender.com/api',
     withCredentials: true, // Important for cross-origin cookies and sessions
 });
 
