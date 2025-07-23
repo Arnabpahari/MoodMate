@@ -5,15 +5,9 @@ import PostList from '../components/Wall/PostList';
 const HomePage = () => {
     const [posts, setPosts] = useState([]);
     const [newPost, setNewPost] = useState('');
-    const [currentUser, setCurrentUser] = useState('');
 
     const token = localStorage.getItem('token');
-
-    useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        setCurrentUser(storedUsername || '');
-        fetchPosts();
-    }, []);
+    const currentUser = localStorage.getItem('username');
 
     const fetchPosts = async () => {
         try {
@@ -24,6 +18,10 @@ const HomePage = () => {
         }
     };
 
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
     const handleCreatePost = async () => {
         if (newPost.trim() === '') return;
 
@@ -31,7 +29,7 @@ const HomePage = () => {
             await axios.post(
                 'https://moodmate-backend-bzmq.onrender.com/api/posts/create',
                 { text: newPost },
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: Bearer ${token} } }
             );
             setNewPost('');
             fetchPosts();
@@ -107,9 +105,9 @@ const HomePage = () => {
                 flexGrow: 1,
                 overflowY: 'auto',
                 padding: '10px',
-                overflowWrap: 'break-word',
-                wordWrap: 'break-word',
-                whiteSpace: 'pre-wrap'
+                overflowWrap: 'break-word',   // Added this to ensure text wraps properly
+                wordWrap: 'break-word',        // Fallback for older browsers
+                whiteSpace: 'pre-wrap'         // Preserve line breaks and wrap long text
             }}>
                 <PostList posts={posts} currentUser={currentUser} fetchPosts={fetchPosts} />
             </div>
