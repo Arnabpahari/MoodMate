@@ -15,9 +15,21 @@ const LoginForm = () => {
         try {
             const res = await axios.post('http://localhost:5000/api/auth/login', formData);
             const token = res.data.token;
-            console.log("Login success. Token:", token);
-            localStorage.setItem('token', token);
-            navigate('/home'); // ✅ navigate after setting token
+
+            if (token) {
+                console.log("Login success. Token:", token);
+                localStorage.setItem('token', token);
+
+                // 🧠 Confirm token is saved before navigating
+                const savedToken = localStorage.getItem('token');
+                if (savedToken) {
+                    navigate('/home');
+                } else {
+                    console.error("Token was not saved to localStorage.");
+                }
+            } else {
+                console.error("No token received in response.");
+            }
         } catch (err) {
             console.error("Login failed:", err.response?.data?.message || err.message);
         }
@@ -33,6 +45,7 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
 
 
 
