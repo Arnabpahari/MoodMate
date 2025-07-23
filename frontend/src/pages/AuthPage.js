@@ -7,8 +7,9 @@ const AuthPage = ({ setIsAuthenticated }) => {
     const [isLogin, setIsLogin] = useState(true);
     const navigate = useNavigate();
 
-    const handleLoginSuccess = () => {
+    const handleLoginSuccess = (username) => {
         setIsAuthenticated(true);
+        localStorage.setItem('username', username); //  Save to localStorage
         navigate('/home');
     };
 
@@ -18,7 +19,7 @@ const AuthPage = ({ setIsAuthenticated }) => {
             {isLogin ? (
                 <LoginForm onLoginSuccess={handleLoginSuccess} />
             ) : (
-                <SignupForm />
+                <SignupForm onSignupSuccess={handleLoginSuccess} />
             )}
             <p style={styles.toggleText}>
                 {isLogin ? "Don't have an account?" : "Already have an account?"}
@@ -29,6 +30,8 @@ const AuthPage = ({ setIsAuthenticated }) => {
         </div>
     );
 };
+
+const styles = { ... };
 
 const styles = {
     container: {
