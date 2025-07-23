@@ -5,12 +5,14 @@ require('dotenv').config();
 
 const app = express();
 
-// Configure CORS properly
+// ✅ CORS setup for token-based auth
 const allowedOrigins = ['https://moodmate-frontend.onrender.com'];
 
 app.use(cors({
     origin: allowedOrigins,
-    credentials: true, // Enable if using cookies/session
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'] // 🔑 critical for token
 }));
 
 app.use(express.json());
@@ -25,12 +27,13 @@ app.use('/api/posts', postRoutes);
 // Root check
 app.get('/', (req, res) => res.send('MoodMate API is running'));
 
-//  Mongo connection + start server
+// DB connect
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log('MongoDB connected');
     app.listen(5000, () => console.log('Server running on port 5000'));
 })
 .catch(err => console.log(err));
+
 
 
