@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
-    const navigate = useNavigate();
 
     const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,10 +12,15 @@ const LoginForm = () => {
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-            const res = await axios.post('https://moodmate-backend-bzmq.onrender.com/api/auth/login', formData);
+            const res = await axios.post(
+                'https://moodmate-backend-bzmq.onrender.com/api/auth/login',
+                formData
+            );
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('username', res.data.username);
-            navigate('/home');  // ✅ React-router navigation
+
+            // ✅ Fix: Force reload so that App.js re-evaluates token presence
+            window.location.href = '/home';
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
         }
@@ -68,4 +71,5 @@ const buttonStyle = {
 };
 
 export default LoginForm;
+
 
