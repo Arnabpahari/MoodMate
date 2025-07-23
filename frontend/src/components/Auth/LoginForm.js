@@ -13,21 +13,25 @@ const LoginForm = () => {
     };
 
     const handleSubmit = async e => {
-        e.preventDefault();
-        try {
-            const res = await axios.post(
-                'https://moodmate-backend-bzmq.onrender.com/api/auth/login',
-                formData
-            );
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('username', res.data.username);
+    e.preventDefault();
+    console.log("Trying login with:", formData);  // 🔍
 
-            console.log("Login success. Token:", res.data.token);
-            navigate('/home');  // ✅ Use React Router navigation
-        } catch (err) {
-            setError(err.response?.data?.message || 'Login failed');
-        }
-    };
+    try {
+        const res = await axios.post(
+            'https://moodmate-backend-bzmq.onrender.com/api/auth/login',
+            formData
+        );
+
+        console.log("Login success:", res.data);  // 🔍
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('username', res.data.username);
+        navigate('/home');
+    } catch (err) {
+        console.error("Login failed:", err.response?.data || err.message);  // 🔍
+        setError(err.response?.data?.message || 'Login error');
+    }
+};
+
 
     return (
         <form onSubmit={handleSubmit}>
