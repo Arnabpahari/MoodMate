@@ -1,37 +1,35 @@
-// src/components/Auth/LoginForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // ✅ ADD THIS
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
-    const navigate = useNavigate();  // ✅ INIT NAVIGATE
+    const navigate = useNavigate();
 
     const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async e => {
-    e.preventDefault();
-    console.log("Trying login with:", formData);  // 🔍
+        e.preventDefault();
+        console.log("Trying login with:", formData);  // 🔍
 
-    try {
-        const res = await axios.post(
-            'https://moodmate-backend-bzmq.onrender.com/api/auth/login',
-            formData
-        );
+        try {
+            const res = await axios.post(
+                'https://moodmate-backend-bzmq.onrender.com/api/auth/login',
+                formData
+            );
 
-        console.log("Login success:", res.data);  // 🔍
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', res.data.username);
-        navigate('/home');
-    } catch (err) {
-        console.error("Login failed:", err.response?.data || err.message);  // 🔍
-        setError(err.response?.data?.message || 'Login error');
-    }
-};
-
+            console.log("Login success:", res.data);  // 🔍
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('username', res.data.username);
+            navigate('/home');
+        } catch (err) {
+            console.error("Login failed:", err.response?.data || err.message);  // 🔍
+            setError(err.response?.data?.message || 'Login error');
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -78,6 +76,7 @@ const buttonStyle = {
 };
 
 export default LoginForm;
+
 
 
 
