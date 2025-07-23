@@ -11,7 +11,7 @@ const HomePage = () => {
 
     const fetchPosts = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/posts/all');
+            const res = await axios.get('https://moodmate-backend-bzmq.onrender.com/api/posts/all');
             setPosts(res.data);
         } catch (err) {
             console.error(err);
@@ -27,7 +27,7 @@ const HomePage = () => {
 
         try {
             await axios.post(
-                'http://localhost:5000/api/posts/create',
+                'https://moodmate-backend-bzmq.onrender.com/api/posts/create',
                 { text: newPost },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
