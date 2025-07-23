@@ -145,7 +145,17 @@ const WallPost = ({ post, currentUser, fetchPosts }) => {
                                 }
                             }}
                         />
-                        <button onClick={handleReplySubmit}>Reply</button>
+                        <button
+                        style={{
+                             backgroundColor: '#dadad7ff',
+                             border: 'none',
+                             padding: '6px 14px',
+                             borderRadius: '8px',
+                             cursor: 'pointer',
+                             marginLeft: '10px',
+                             transition: '0.2s ease-in-out',
+                            }}
+                         onClick={handleReplySubmit}><i className="ri-arrow-right-line"></i></button>
                     </div>
                 </div>
             )}
