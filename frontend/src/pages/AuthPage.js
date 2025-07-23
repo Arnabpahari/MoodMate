@@ -3,13 +3,12 @@ import LoginForm from '../components/Auth/LoginForm';
 import SignupForm from '../components/Auth/SignupForm';
 import { useNavigate } from 'react-router-dom';
 
-const AuthPage = () => {
+const AuthPage = ({ setIsAuthenticated }) => {
     const [isLogin, setIsLogin] = useState(true);
     const navigate = useNavigate();
 
-    // Called when login is successful
     const handleLoginSuccess = () => {
-        // Token already saved in LoginForm
+        setIsAuthenticated(true);
         navigate('/home');
     };
 
@@ -59,6 +58,7 @@ const styles = {
 };
 
 export default AuthPage;
+
 
 
 
