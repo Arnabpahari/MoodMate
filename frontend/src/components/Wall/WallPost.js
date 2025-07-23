@@ -21,7 +21,7 @@ const WallPost = ({ post, currentUser, fetchPosts }) => {
         try {
             const capitalized = replyText.charAt(0).toUpperCase() + replyText.slice(1);
             const res = await axios.post(
-                `http://localhost:5000/api/posts/reply/${post._id}`,
+                `https://moodmate-backend-bzmq.onrender.com/api/posts/reply/${post._id}`,
                 { text: capitalized },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -39,7 +39,7 @@ const WallPost = ({ post, currentUser, fetchPosts }) => {
     const handleDeletePost = async () => {
         try {
             await axios.delete(
-                `http://localhost:5000/api/posts/delete/${post._id}`,
+                `https://moodmate-backend-bzmq.onrender.com/api/posts/delete/${post._id}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setConfirmDeletePost(false);
@@ -56,7 +56,7 @@ const WallPost = ({ post, currentUser, fetchPosts }) => {
     const handleDeleteReply = async () => {
         try {
             const res = await axios.delete(
-                `http://localhost:5000/api/posts/reply/${post._id}/${confirmDeleteReplyIndex}`,
+                `https://moodmate-backend-bzmq.onrender.com/api/posts/reply/${post._id}/${confirmDeleteReplyIndex}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setLocalReplies(res.data.replies);
