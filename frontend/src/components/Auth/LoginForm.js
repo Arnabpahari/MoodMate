@@ -1,9 +1,12 @@
+// src/components/Auth/LoginForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // ✅ ADD THIS
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [error, setError] = useState('');
+    const navigate = useNavigate();  // ✅ INIT NAVIGATE
 
     const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,8 +22,7 @@ const LoginForm = () => {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('username', res.data.username);
 
-            // ✅ Fix: Force reload so that App.js re-evaluates token presence
-            window.location.href = '/home';
+            navigate('/home');  // ✅ Use React Router navigation
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed');
         }
@@ -71,5 +73,6 @@ const buttonStyle = {
 };
 
 export default LoginForm;
+
 
 
