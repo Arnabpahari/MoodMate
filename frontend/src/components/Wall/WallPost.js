@@ -163,60 +163,7 @@ const WallPost = ({ post, currentUser, fetchPosts }) => {
             
 
 
-            {/* Custom Modal for Post Delete */}
-            {confirmDeletePost && (
-                <div style={modalStyles.backdrop}>
-                    <div style={modalStyles.modal}>
-                        <p>Are you sure you want to delete this post?</p>
-                        <button onClick={handleDeletePost} style={modalStyles.button}>Yes</button>
-                        <button onClick={() => setConfirmDeletePost(false)} style={modalStyles.button}>Cancel</button>
-                    </div>
-                </div>
-            )}
-
-            {/* Custom Modal for Reply Delete */}
-            {confirmDeleteReplyIndex !== null && (
-                <div style={modalStyles.backdrop}>
-                    <div style={modalStyles.modal}>
-                        <p>Are you sure you want to delete this reply?</p>
-                        <button onClick={handleDeleteReply} style={modalStyles.button}>Yes</button>
-                        <button onClick={() => setConfirmDeleteReplyIndex(null)} style={modalStyles.button}>Cancel</button>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
-
-const modalStyles = {
-    backdrop: {
-        position: 'fixed',
-        top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 999
-    },
-    modal: {
-        background: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        textAlign: 'center',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
-        backgroundColor: '#fffffeff',
-    },
-    button: {
-        margin: '10px',
-        padding: '8px 12px',
-        cursor: 'pointer',
-        border: 'none',
-        borderRadius: '5px',
-    }
-};
-
-
-export default WallPost;
+           
 */
 
 import React, { useState } from 'react';
