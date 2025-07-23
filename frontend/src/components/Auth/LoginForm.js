@@ -1,50 +1,52 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState({ username: '', password: '' });
+const LoginForm = ({ onLoginSuccess }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleLogin = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/login', formData);
-            const token = res.data.token;
+            const response = await axios.post('http://localhost:5000/api/auth/login', {
+                username,
+                password
+            });
 
-            console.log("Login success. Token:", token);
-
-            if (token) {
-                localStorage.setItem('token', token);
-                const saved = localStorage.getItem('token');
-                console.log("Saved in localStorage:", saved);
-
-                if (saved === token) {
-                    navigate('/home');
-                } else {
-                    console.error("Token not properly saved.");
-                }
-            } else {
-                console.error("No token received in response.");
-            }
+            const token = response.data.token;
+            localStorage.setItem('token', token);
+            onLoginSuccess(); // callback to navigate
         } catch (err) {
-            console.error("Login failed:", err.response?.data?.message || err.message);
+            console.error(err);
+            setError('Login failed. Please check your credentials.');
         }
     };
 
     return (
-        <div>
-            <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
-            <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
-            <button type="button" onClick={handleLogin}>Login</button>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+            />
+            <button type="submit">Login</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
     );
 };
 
 export default LoginForm;
+
 
 
 
