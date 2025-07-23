@@ -5,9 +5,15 @@ import PostList from '../components/Wall/PostList';
 const HomePage = () => {
     const [posts, setPosts] = useState([]);
     const [newPost, setNewPost] = useState('');
+    const [currentUser, setCurrentUser] = useState('');
 
     const token = localStorage.getItem('token');
-    const currentUser = localStorage.getItem('username');
+
+    useEffect(() => {
+        const storedUsername = localStorage.getItem('username');
+        setCurrentUser(storedUsername || '');
+        fetchPosts();
+    }, []);
 
     const fetchPosts = async () => {
         try {
@@ -17,10 +23,6 @@ const HomePage = () => {
             console.error(err);
         }
     };
-
-    useEffect(() => {
-        fetchPosts();
-    }, []);
 
     const handleCreatePost = async () => {
         if (newPost.trim() === '') return;
@@ -105,9 +107,9 @@ const HomePage = () => {
                 flexGrow: 1,
                 overflowY: 'auto',
                 padding: '10px',
-                overflowWrap: 'break-word',   // Added this to ensure text wraps properly
-                wordWrap: 'break-word',        // Fallback for older browsers
-                whiteSpace: 'pre-wrap'         // Preserve line breaks and wrap long text
+                overflowWrap: 'break-word',
+                wordWrap: 'break-word',
+                whiteSpace: 'pre-wrap'
             }}>
                 <PostList posts={posts} currentUser={currentUser} fetchPosts={fetchPosts} />
             </div>
@@ -116,6 +118,7 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
 
 
 
