@@ -2,8 +2,10 @@ import axios from 'axios';
 
 const API = axios.create({
     baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+    withCredentials: true, // Important for cross-origin cookies and sessions
 });
 
+// Attach Authorization token if available
 API.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {
